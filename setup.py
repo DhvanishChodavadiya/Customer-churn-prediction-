@@ -16,7 +16,6 @@ def get_requirements(file_path:str) -> List[str]:
 
 setup (
     name = 'Customer churn prediction',
-    version= '0.0.1',
     author='Dhvanish Chodvadiya',
     author_email='dhvanishchodhvadiya2025@gmail.com',
     packages=find_packages(),

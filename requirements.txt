@@ -2,4 +2,5 @@ pandas
 numpy
 seaborn
 matplotlib
--e .
+ipykernel
+#-e .

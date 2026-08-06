@@ -22,7 +22,7 @@ class DataTransformation:
     def get_data_transformation_object(self):
         try:
             self.num_columns = ['SeniorCitizen','tenure','MonthlyCharges','TotalCharges']
-            self.cat_columns = ['gender','Partners','Dependents','PhoneService','MultipleLines','InternetService','OnlineSecurity','OnlineBackup','DeviceProtection','TechSupport','StreamingTV','StreamingMovies','Contract','PaperlessBilling','PaymentMethod']
+            self.cat_columns = ['gender','Partner','Dependents','PhoneService','MultipleLines','InternetService','OnlineSecurity','OnlineBackup','DeviceProtection','TechSupport','StreamingTV','StreamingMovies','Contract','PaperlessBilling','PaymentMethod']
 
             num_pipeline = Pipeline(
                 steps=[

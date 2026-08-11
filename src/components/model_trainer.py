@@ -50,6 +50,7 @@ class ModelTraining:
                 file_path=self.model_training_config.trained_model_path,
                 obj=best_model
             )
+            logging.info("Best model is saved")
 
             predict = best_model.predict(X_test)
             roc__auc_score = roc_auc_score(y_test,predict)

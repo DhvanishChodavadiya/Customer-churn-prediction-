@@ -36,7 +36,7 @@ class ModelTraining:
                 "CatBoost": CatBoostClassifier(verbose=0, random_state=42),
                 "Gradient Boosting": GradientBoostingClassifier(random_state=42),
                 "SVM": SVC(class_weight='balanced', probability=True, random_state=42),
-                "KNN": KNeighborsClassifier(n_neighbors=5),
+                "KNN": KNeighborsClassifier(n_neighbors=5)
             }
 
             model_report:dict = evaluate_model(X_train,X_test,y_train,y_test,models)

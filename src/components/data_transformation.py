@@ -92,8 +92,8 @@ class DataTransformation:
 
             logging.info('LableBinarizer applied on y')
             
-            train_arr = np.c_[X_train_transformed,np.array(y_train_transformed)]
-            test_arr = np.c_[X_test_transformed,np.array(y_test_transformed)]
+            # train_arr = np.c_[X_train_transformed,np.array(y_train_transformed)]
+            # test_arr = np.c_[X_test_transformed,np.array(y_test_transformed)]
             logging.info('Saved preprocessed objects')
 
             save_object(
@@ -102,9 +102,10 @@ class DataTransformation:
             )
 
             return(
-                train_arr,
-                test_arr,
-                self.data_transformation.preprocessor_file_path
+                X_train_transformed,
+                X_test_transformed,
+                y_train_transformed,
+                y_test_transformed
             )
         
         except Exception as e:

@@ -54,6 +54,6 @@ if __name__ == '__main__':
     #print(train_arr)
 
     model_training = ModelTraining()
-    model,roc_auc_score = model_training.initialize_model_training(X_train,X_test,y_train,y_test)
-    print(f'Best model is {model} with roc_auc_score {roc_auc_score}')
+    best_model,roc,f1= model_training.initialize_model_training(X_train,X_test,y_train,y_test)
+    print(f'Best model = {best_model} \n roc_auc_score = {roc} \n f1_score = {f1}')
     

@@ -9,7 +9,7 @@ from sklearn.pipeline import Pipeline
 from dataclasses import dataclass
 from src.exception import CustomException
 from src.logger import logging
-from src.utils import save_object
+from src.utils import save_object,feature_engineering,data_cleaning
 
 @dataclass
 class DataTransformationConfig:
@@ -21,8 +21,17 @@ class DataTransformation:
 
     def get_data_transformation_object(self):
         try:
-            self.num_columns = ['SeniorCitizen','tenure','MonthlyCharges','TotalCharges']
-            self.cat_columns = ['gender','Partner','Dependents','PhoneService','MultipleLines','InternetService','OnlineSecurity','OnlineBackup','DeviceProtection','TechSupport','StreamingTV','StreamingMovies','Contract','PaperlessBilling','PaymentMethod']
+            self.numerical_feature = ['SeniorCitizen','tenure','MonthlyCharges','TotalCharges']
+            self.categorical_feature = ['gender','Partner','Dependents','PhoneService','MultipleLines','InternetService','OnlineSecurity','OnlineBackup','DeviceProtection','TechSupport','Contract','PaperlessBilling','PaymentMethod','StreamingMovies','StreamingTV']
+
+            self.new_categorical_feature = ['gender','Partner','Dependents','PhoneService','MultipleLines','InternetService','OnlineSecurity','OnlineBackup','DeviceProtection','TechSupport','Contract','PaperlessBilling','PaymentMethod','Is_streaming']
+
+            # self.numerical_feature = train_df.select_dtypes(exclude="str").columns
+            # self.categorical_feature = train_df.select_dtypes(include="str").columns
+
+            # for col in self.categorical_feature:
+            #     if col == 'Churn':
+            #         self.categorical_feature = self.categorical_feature.drop(col)
 
             num_pipeline = Pipeline(
                 steps=[
@@ -39,8 +48,8 @@ class DataTransformation:
             )
 
             preprocessor = ColumnTransformer([
-                ('num_columns',num_pipeline,self.num_columns),
-                ('cat_columns',cat_pipeline,self.cat_columns)
+                ('num_columns',num_pipeline,self.numerical_feature),
+                ('cat_columns',cat_pipeline,self.new_categorical_feature)
             ])
 
             return preprocessor
@@ -57,27 +66,19 @@ class DataTransformation:
             preprocessing_obj = self.get_data_transformation_object()
             logging.info('Got preprocessing object')
 
-            for col in self.num_columns:
-                if train_df[col].dtype == 'str':
-                    train_df[col] = pd.to_numeric(train_df[col],errors='coerce')
-            for col in self.num_columns:
-                if test_df[col].dtype == 'str':
-                    test_df[col] = pd.to_numeric(test_df[col],errors='coerce')
-
-            for col in self.cat_columns:
-                train_df[col] =  train_df[col].str.replace(' ', '')
-                train_df[col] =  train_df[col].str.replace('-', '')
-            for col in self.cat_columns:
-                test_df[col] =  test_df[col].str.replace(' ', '')
-                test_df[col] =  test_df[col].str.replace('-', '')
+            cleaned_train_df,cleaned_test_df = data_cleaning(train_df,test_df,self.numerical_feature,self.categorical_feature)
 
             logging.info('TotalCharges is converted into numeric datatype and all blank spaces and - are removes from categorical columns')
-            
-            X_train = train_df.drop(columns=['Churn'])
-            y_train = train_df['Churn']
 
-            X_test = test_df.drop(columns=['Churn'])
-            y_test = test_df['Churn']
+            train_df_FE,test_df_FE = feature_engineering(cleaned_train_df,cleaned_test_df)
+
+            logging.info('New feature are created')
+
+            X_train = train_df_FE.drop(columns=['Churn'])
+            y_train = train_df_FE['Churn']
+
+            X_test = test_df_FE.drop(columns=['Churn'])
+            y_test = test_df_FE['Churn']
 
             logging.info('Train and test dataset devided into X and y')            
 

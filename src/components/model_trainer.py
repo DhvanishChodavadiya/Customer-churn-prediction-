@@ -1,5 +1,6 @@
 import sys
 import os
+import pandas as pd
 from src.exception import CustomException
 from src.logger import logging
 
@@ -12,7 +13,7 @@ from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
 
-from sklearn.metrics import roc_auc_score
+from sklearn.metrics import roc_auc_score,f1_score
 
 from src.utils import save_object,evaluate_model
 
@@ -54,8 +55,9 @@ class ModelTraining:
 
             predict = best_model.predict(X_test)
             roc__auc_score = roc_auc_score(y_test,predict)
+            f1__score = f1_score(y_test,predict)
 
-            return best_model,roc__auc_score
+            return best_model,roc__auc_score,f1__score
 
 
         except Exception as e:

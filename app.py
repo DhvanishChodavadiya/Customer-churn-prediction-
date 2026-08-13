@@ -39,8 +39,8 @@ def predict_datapoint():
             Contract=request.form.get('Contract'),
             PaperlessBilling=request.form.get('PaperlessBilling'),
             PaymentMethod=request.form.get('PaymentMethod'),
-            MonthlyCharges=float(request.form.get('MonthlyCharges')),
-            TotalCharges=float(request.form.get('TotalCharges'))
+            MonthlyCharges=request.form.get('MonthlyCharges'),
+            TotalCharges=request.form.get('TotalCharges')
         )
 
         df = data.get_data_as_dataframe()
@@ -55,4 +55,4 @@ def predict_datapoint():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0',debug=True)

@@ -79,7 +79,7 @@ class customData:
                 'tenure': [self.tenure],
                 'PhoneService': [self.PhoneService],
                 'MultipleLines': [self.MultipleLines],
-                'InterneretService': [self.InternetService],
+                'InternetService': [self.InternetService],
                 "OnlineSecurity": [self.OnlineSecurity],
                 'OnlineBackup': [self.OnlineBackup],
                 'DeviceProtection': [self.DeviceProtection],

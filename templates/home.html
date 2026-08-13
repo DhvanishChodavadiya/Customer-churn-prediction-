@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -289,7 +289,7 @@
       <legend><span class="idx">04</span> Add-on Services <span class="count">6 fields</span></legend>
       <div class="grid" id="addonGrid">
         <!-- populated identically for each add-on service -->
-      </div>
+      <!-- </div>
     </fieldset>
 
     <fieldset>
@@ -388,5 +388,252 @@
     document.getElementById('output').scrollIntoView({behavior:'smooth', block:'nearest'});
   });
 </script>
+</body>
+</html> --> 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Simple Form</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+  }
+  form {
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    width: 300px;
+  }
+  h2 {
+    margin-top: 0;
+    text-align: center;
+  }
+  label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  input, textarea {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  button {
+    margin-top: 20px;
+    width: 100%;
+    padding: 10px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  button:hover {
+    background: #45a049;
+  }
+</style>
+</head>
+<body>
+
+<form id="myForm" action="{{url_for('predict_datapoint')}}" method="post">
+  <h2>Contact Us</h2>
+
+  <div>
+    <label for="gender">Gender</label>
+    <select id="gender" name="gender" required>
+      <option value="">Select...</option>
+      <option value="female">Female</option>
+      <option value="male">Male</option>
+    </select>
+  </div>
+
+  <div>
+    <label for="SeniorCitizen">SeniorCitizen</label>
+    <select id="SeniorCitizen" name="SeniorCitizen" required>
+      <option value="">Select...</option>
+      <option value="Yes">Yes</option>
+      <option value="No">No</option>
+    </select>
+  </div>
+  
+  <div>
+    <label for="Partner">Partner</label>
+    <select id="Partner" name="Partner" required>
+      <option value="">Select...</option>
+      <option value="Yes">Yes</option>
+      <option value="No">No</option>
+    </select>
+  </div>
+  
+  <div>
+    <label for="Dependents">Dependents</label>
+    <select id="Dependents" name="Dependents" required>
+      <option value="">Select...</option>
+      <option value="Yes">Yes</option>
+      <option value="No">No</option>
+    </select>
+  </div>
+
+  <div>
+    <label for="tenure">Tenure</label>
+    <input type="number" id="tenure" name="tenure" required>
+  </div>
+
+  <div>
+    <label for="PhoneService">PhoneService</label>
+    <select id="PhoneService" name="PhoneService" required>
+      <option value="">Select...</option>
+      <option value="Yes">Yes</option>
+      <option value="No">No</option>
+    </select>
+  </div>
+  
+  <div>
+    <label for="MultipleLines">MultipleLines</label>
+    <select id="MultipleLines" name="MultipleLines" required>
+      <option value="">Select...</option>
+      <option value="Yes">Yes</option>
+      <option value="No">No</option>
+      <option value="No phone service">No phone service</option>
+    </select>
+  </div>
+  
+  <div>
+    <label for="InternetService">InternetService</label>
+    <select id="InternetService" name="InternetService" required>
+      <option value="">Select...</option>
+      <option value="DSL">DSL</option>
+      <option value="Fiber optic">Fiber optic</option>
+      <option value="No">No</option>
+    </select>
+  </div>
+  
+  <div>
+    <label for="OnlineSecurity">OnlineSecurity</label>
+    <select id="OnlineSecurity" name="OnlineSecurity" required>
+      <option value="">Select...</option>
+      <option value="Yes">Yes</option>
+      <option value="No">No</option>
+      <option value="No internet service">No internet service</option>
+    </select>
+  </div>
+  
+  <div>
+    <label for="OnlineBackup">OnlineBackup</label>
+    <select id="OnlineBackup" name="OnlineBackup" required>
+      <option value="">Select...</option>
+      <option value="Yes">Yes</option>
+      <option value="No">No</option>
+      <option value="No internet service">No internet service</option>
+    </select>
+  </div>
+  
+  <div>
+    <label for="DeviceProtection">DeviceProtection</label>
+    <select id="DeviceProtection" name="DeviceProtection" required>
+      <option value="">Select...</option>
+      <option value="Yes">Yes</option>
+      <option value="No">No</option>
+      <option value="No internet service">No internet service</option>
+    </select>
+  </div>
+  
+  <div>
+    <label for="TechSupport">TechSupport</label>
+    <select id="TechSupport" name="TechSupport" required>
+      <option value="">Select...</option>
+      <option value="Yes">Yes</option>
+      <option value="No">No</option>
+      <option value="No internet service">No internet service</option>
+    </select>
+  </div>
+  
+  <div>
+    <label for="StreamingTV">StreamingTV</label>
+    <select id="StreamingTV" name="StreamingTV" required>
+      <option value="">Select...</option>
+      <option value="Yes">Yes</option>
+      <option value="No">No</option>
+      <option value="No internet service">No internet service</option>
+    </select>
+  </div>
+  
+  <div>
+    <label for="StreamingMovies">StreamingMovies</label>
+    <select id="StreamingMovies" name="StreamingMovies" required>
+      <option value="">Select...</option>
+      <option value="Yes">Yes</option>
+      <option value="No">No</option>
+      <option value="No internet service">No internet service</option>
+    </select>
+  </div>
+  
+  <div>
+    <label for="Contract">Contract</label>
+    <select id="Contract" name="Contract" required>
+      <option value="">Select...</option>
+      <option value="Month-to-month">Month-to-month</option>
+      <option value="One year">One year</option>
+      <option value="Two year">Two year</option>
+    </select>
+  </div>
+
+  <div>
+    <label for="PaperlessBilling">PaperlessBilling</label>
+    <select id="PaperlessBilling" name="PaperlessBilling" required>
+      <option value="">Select...</option>
+      <option value="Yes">Yes</option>
+      <option value="No">No</option>
+    </select>
+  </div>
+
+  <div>
+    <label for="PaymentMethod">PaymentMethod</label>
+    <select id="PaymentMethod" name="PaymentMethod" required>
+      <option value="">Select...</option>
+      <option value="Electronic check">Electronic check</option>
+      <option value="Mailed check">Mailed check</option>
+      <option value="Bank transfer (automatic)">Bank transfer (automatic)</option>
+      <option value="Credit card (automatic)">Credit card (automatic)</option>
+    </select>
+  </div>
+
+  <div>
+    <label for="MonthlyCharges">MonthlyCharges</label>
+    <input type="number" id="MonthlyCharges" name="MonthlyCharges">
+  </div>
+  
+  <div>
+    <label for="TotalCharges">TotalCharges</label>
+    <input type="number" id="TotalCharges" name="TotalCharges">
+  </div>
+
+  <button type="submit">Submit</button>
+</form>
+
+<div>
+  <h2>Prediction is {{result}}</h2>
+</div>
+
+<!-- <script>
+document.getElementById('myForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  alert('Form submitted!');
+}); -->
+</script>
+
 </body>
 </html>

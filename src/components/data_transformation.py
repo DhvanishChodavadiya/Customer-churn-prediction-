@@ -22,7 +22,9 @@ class DataTransformation:
     def get_data_transformation_object(self):
         try:
             self.numerical_feature = ['SeniorCitizen','tenure','MonthlyCharges','TotalCharges']
-            self.categorical_feature = ['gender','Partner','Dependents','PhoneService','MultipleLines','InternetService','OnlineSecurity','OnlineBackup','DeviceProtection','TechSupport','Contract','PaperlessBilling','PaymentMethod','StreamingMovies','StreamingTV']
+            self.categorical_feature = ['gender','Partner','Dependents','PhoneService','MultipleLines','InternetService','OnlineSecurity',
+                                        'OnlineBackup','DeviceProtection','TechSupport','Contract','PaperlessBilling','PaymentMethod',
+                                        'StreamingMovies','StreamingTV']
 
             self.new_categorical_feature = ['gender','Partner','Dependents','PhoneService','MultipleLines','InternetService','OnlineSecurity','OnlineBackup','DeviceProtection','TechSupport','Contract','PaperlessBilling','PaymentMethod','Is_streaming']
 

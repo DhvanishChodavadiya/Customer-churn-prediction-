@@ -7,4 +7,5 @@ scikit-learn
 xgboost
 lightgbm
 catboost
+Flask
 #-e .

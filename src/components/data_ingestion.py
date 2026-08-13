@@ -1,5 +1,6 @@
 import sys
 import os
+import warnings
 import pandas as pd
 from src.exception import CustomException
 from sklearn.model_selection import train_test_split
@@ -7,6 +8,8 @@ from dataclasses import dataclass
 from src.logger import logging
 from src.components.data_transformation import DataTransformation
 from src.components.model_trainer import ModelTraining
+
+warnings.filterwarnings('ignore')
 
 @dataclass
 class DataIngestionConfig:
@@ -54,6 +57,6 @@ if __name__ == '__main__':
     #print(train_arr)
 
     model_training = ModelTraining()
-    best_model,roc,f1= model_training.initialize_model_training(X_train,X_test,y_train,y_test)
-    print(f'Best model = {best_model} \n roc_auc_score = {roc} \n f1_score = {f1}')
+    f1,precision,recall= model_training.initialize_model_training(X_train,X_test,y_train,y_test)
+    print(f'Logistic Regression :\n f1_score = {f1*100} \n Precision = {precision*100} \n Recall = {recall*100}')
     

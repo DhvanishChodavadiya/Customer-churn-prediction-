@@ -5,8 +5,9 @@ import sys
 import pickle
 from src.exception import CustomException
 from collections import defaultdict
+from sklearn.linear_model import LogisticRegression
 
-from sklearn.metrics import roc_auc_score,f1_score
+from sklearn.metrics import roc_auc_score,f1_score,precision_score,recall_score
 
 def save_object(file_path,obj):
     try:
@@ -19,24 +20,34 @@ def save_object(file_path,obj):
     except Exception as e:
         raise CustomException(e,sys)
 
-def evaluate_model(X_train,X_test,y_train,y_test,models):
+def evaluate_model(X_train,X_test,y_train,y_test):
     try:
-        report = {}
+        # report = {}
         
-        for i in range(len(list(models))):
-            model = list(models.values())[i]
+        # for i in range(len(list(models))):
+        #     model = list(models.values())[i]
 
-            model.fit(X_train,y_train)
+        #     model.fit(X_train,y_train)
 
-            y_train_pred = model.predict(X_train)
-            y_test_pred = model.predict(X_test)
+        #     y_train_pred = model.predict(X_train)
+        #     y_test_pred = model.predict(X_test)
 
-            train_model_roc_auc_score = roc_auc_score(y_train,y_train_pred)
-            test_model_roc_auc_score = roc_auc_score(y_test,y_test_pred)
+        #     train_model_roc_auc_score = roc_auc_score(y_train,y_train_pred)
+        #     test_model_roc_auc_score = roc_auc_score(y_test,y_test_pred)
 
-            report[list(models.keys())[i]] = test_model_roc_auc_score
+        #     report[list(models.keys())[i]] = test_model_roc_auc_score
 
-        return report
+        model = LogisticRegression(class_weight='balanced',max_iter=1000,C=0.1,penalty='l1',solver='liblinear')
+
+        model.fit(X_train,y_train)
+
+        y_pred = model.predict(X_test)
+
+        f1 = f1_score(y_test,y_pred)
+        precision = precision_score(y_test,y_pred)
+        recall = recall_score(y_test,y_pred)
+
+        return f1,model,precision,recall
     
     except Exception as e:
         raise CustomException(e,sys)

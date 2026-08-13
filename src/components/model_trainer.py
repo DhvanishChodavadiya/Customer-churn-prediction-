@@ -29,35 +29,37 @@ class ModelTraining:
 
     def initialize_model_training(self,X_train,X_test,y_train,y_test):
         try:
-            models = {
-                "Logistic Regression": LogisticRegression(class_weight='balanced', max_iter=1000, random_state=42),
-                "Random Forest": RandomForestClassifier(class_weight='balanced', n_estimators=200, random_state=42),
-                "XGBoost": XGBClassifier(eval_metric='logloss', random_state=42),
-                "LightGBM": LGBMClassifier(class_weight='balanced', random_state=42),
-                "CatBoost": CatBoostClassifier(verbose=0, random_state=42),
-                "Gradient Boosting": GradientBoostingClassifier(random_state=42),
-                "SVM": SVC(class_weight='balanced', probability=True, random_state=42),
-                "KNN": KNeighborsClassifier(n_neighbors=5)
-            }
+            # models = {
+            #     "Logistic Regression": LogisticRegression(class_weight='balanced', max_iter=1000, random_state=42),
+            #     "Random Forest": RandomForestClassifier(class_weight='balanced', n_estimators=200, random_state=42),
+            #     "XGBoost": XGBClassifier(eval_metric='logloss', random_state=42),
+            #     "LightGBM": LGBMClassifier(class_weight='balanced', random_state=42),
+            #     "CatBoost": CatBoostClassifier(verbose=0, random_state=42),
+            #     "Gradient Boosting": GradientBoostingClassifier(random_state=42),
+            #     "SVM": SVC(class_weight='balanced', probability=True, random_state=42),
+            #     "KNN": KNeighborsClassifier(n_neighbors=5)
+            # }
 
-            model_report:dict = evaluate_model(X_train,X_test,y_train,y_test,models)
+            # model_report:dict = evaluate_model(X_train,X_test,y_train,y_test)
 
-            best_model_score = max(sorted(model_report.values()))
-            best_model_name = list(model_report.keys())[list(model_report.values()).index(best_model_score)]
-            best_model = models[best_model_name]
-            logging.info(f'Best model is {best_model}')
+            # best_model_score = max(sorted(model_report.values()))
+            # best_model_name = list(model_report.keys())[list(model_report.values()).index(best_model_score)]
+            # best_model = models[best_model_name]
+            # logging.info(f'Best model is {best_model}')
+
+            f1,model,precision,recall = evaluate_model(X_train,X_test,y_train,y_test)
 
             save_object(
                 file_path=self.model_training_config.trained_model_path,
-                obj=best_model
+                obj=model
             )
             logging.info("Best model is saved")
 
-            predict = best_model.predict(X_test)
-            roc__auc_score = roc_auc_score(y_test,predict)
-            f1__score = f1_score(y_test,predict)
+            # predict = best_model.predict(X_test)
+            # roc__auc_score = roc_auc_score(y_test,predict)
+            
 
-            return best_model,roc__auc_score,f1__score
+            return f1,precision,recall
 
 
         except Exception as e:

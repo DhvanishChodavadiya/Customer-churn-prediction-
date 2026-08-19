@@ -2,7 +2,7 @@ import os
 import sys
 import pandas as pd
 import numpy as np
-from sklearn.preprocessing import OneHotEncoder,StandardScaler,LabelBinarizer
+from sklearn.preprocessing import OneHotEncoder,StandardScaler,LabelBinarizer,OrdinalEncoder
 from sklearn.impute import SimpleImputer
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
@@ -18,16 +18,18 @@ class DataTransformationConfig:
 class DataTransformation:
     def __init__(self):
         self.data_transformation = DataTransformationConfig()
+        self.numerical_feature = ['SeniorCitizen','tenure','MonthlyCharges','TotalCharges']
+        self.new_numerical_feature = ['SeniorCitizen','tenure','MonthlyCharges']
+        self.categorical_feature = ['gender','Partner','Dependents','PhoneService','MultipleLines','OnlineSecurity',
+                                                'OnlineBackup','DeviceProtection','TechSupport','PaperlessBilling',
+                                                'StreamingMovies','StreamingTV','InternetService','Contract','PaymentMethod']
+        self.oe_cat_feature = ['InternetService','Contract','PaymentMethod']
+        self.new_categorical_feature = ['gender','Partner','Dependents','PhoneService','MultipleLines','OnlineSecurity','OnlineBackup','DeviceProtection','TechSupport','PaperlessBilling','Is_streaming']
+        
 
     def get_data_transformation_object(self):
         try:
-            self.numerical_feature = ['SeniorCitizen','tenure','MonthlyCharges','TotalCharges']
-            self.categorical_feature = ['gender','Partner','Dependents','PhoneService','MultipleLines','InternetService','OnlineSecurity',
-                                        'OnlineBackup','DeviceProtection','TechSupport','Contract','PaperlessBilling','PaymentMethod',
-                                        'StreamingMovies','StreamingTV']
-
-            self.new_categorical_feature = ['gender','Partner','Dependents','PhoneService','MultipleLines','InternetService','OnlineSecurity','OnlineBackup','DeviceProtection','TechSupport','Contract','PaperlessBilling','PaymentMethod','Is_streaming']
-
+            
             # self.numerical_feature = train_df.select_dtypes(exclude="str").columns
             # self.categorical_feature = train_df.select_dtypes(include="str").columns
 
@@ -42,6 +44,13 @@ class DataTransformation:
                 ]
             )
 
+            oe_cat_pipeline = Pipeline(
+                steps=[
+                    ('Imputer',SimpleImputer(strategy='most_frequent')),
+                    ('OE',OrdinalEncoder(categories=[['No','DSL','Fiberoptic'],['Monthtomonth','Oneyear','Twoyear'],['Electroniccheck','Mailedcheck','Banktransfer(automatic)','Creditcard(automatic)']]))
+                ]
+            )
+
             cat_pipeline = Pipeline(
                 steps=[
                     ("Imputer",SimpleImputer(strategy='most_frequent')),
@@ -50,7 +59,8 @@ class DataTransformation:
             )
 
             preprocessor = ColumnTransformer([
-                ('num_columns',num_pipeline,self.numerical_feature),
+                ('num_columns',num_pipeline,self.new_numerical_feature),
+                ('oe_cat_columns',oe_cat_pipeline,self.oe_cat_feature),
                 ('cat_columns',cat_pipeline,self.new_categorical_feature)
             ])
 
@@ -64,9 +74,6 @@ class DataTransformation:
             train_df = pd.read_csv(train_path)
             test_df = pd.read_csv(test_path)
             logging.info('Reading training and testing data is complete')
-
-            preprocessing_obj = self.get_data_transformation_object()
-            logging.info('Got preprocessing object')
 
             cleaned_train_df,cleaned_test_df = data_cleaning(train_df,test_df,self.numerical_feature,self.categorical_feature)
 
@@ -82,7 +89,10 @@ class DataTransformation:
             X_test = test_df_FE.drop(columns=['Churn'])
             y_test = test_df_FE['Churn']
 
-            logging.info('Train and test dataset devided into X and y')            
+            logging.info('Train and test dataset devided into X and y') 
+
+            preprocessing_obj = self.get_data_transformation_object()
+            logging.info('Got preprocessing object')           
 
             X_train_transformed = preprocessing_obj.fit_transform(X_train)
             X_test_transformed = preprocessing_obj.transform(X_test)
@@ -97,12 +107,13 @@ class DataTransformation:
             
             # train_arr = np.c_[X_train_transformed,np.array(y_train_transformed)]
             # test_arr = np.c_[X_test_transformed,np.array(y_test_transformed)]
-            logging.info('Saved preprocessed objects')
 
             save_object(
                 file_path = self.data_transformation.preprocessor_file_path,
                 obj = preprocessing_obj
             )
+
+            logging.info('Saved preprocessed objects')
 
             return(
                 X_train_transformed,

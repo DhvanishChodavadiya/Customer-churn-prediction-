@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 
 from sklearn.preprocessing import StandardScaler
-from src.pipeline.prediction_pipeline import customData,predictPipeline
+from src.pipeline.prediction_pipeline import customData,predictPipeline,dataTransformation
 from src.logger import logging
 
 application = Flask(__name__)
@@ -45,9 +45,14 @@ def predict_datapoint():
 
         df = data.get_data_as_dataframe()
 
+        print(df)
+
+        transform = dataTransformation()
+        transformed_df = transform.transformation(df=df)
+
         predict_pipeline = predictPipeline()
 
-        result = predict_pipeline.predict(df)
+        result = predict_pipeline.predict(transformed_df)
         logging.info('Successfully made prediction on new data')
         print(result)
 

@@ -1,6 +1,7 @@
 import sys
 import os
 import pandas as pd
+import numpy as np
 from src.exception import CustomException
 from src.utils import load_object
 
@@ -20,6 +21,44 @@ class predictPipeline:
             prediction = model.predict(preprocessed_data)
 
             return prediction
+        except Exception as e:
+            raise CustomException(e,sys)
+
+class dataTransformation:
+    def __init__(self):
+        self.numerical_feature = ['SeniorCitizen','tenure','MonthlyCharges','TotalCharges']
+        self.new_numerical_feature = ['SeniorCitizen','tenure','MonthlyCharges']
+        self.categorical_feature = ['gender','Partner','Dependents','PhoneService','MultipleLines','OnlineSecurity',
+                                                        'OnlineBackup','DeviceProtection','TechSupport','PaperlessBilling',
+                                                        'StreamingMovies','StreamingTV','InternetService','Contract','PaymentMethod']
+        self.oe_cat_feature = ['InternetService','Contract','PaymentMethod']
+        self.new_categorical_feature = ['gender','Partner','Dependents','PhoneService','MultipleLines','OnlineSecurity','OnlineBackup','DeviceProtection','TechSupport','PaperlessBilling','Is_streaming']
+                
+
+    def transformation(self,df):
+        try:
+            for col in self.numerical_feature:
+                if df[col].dtype == 'str':
+                    df[col] = pd.to_numeric(df[col],errors='coerce')
+
+            for col in self.categorical_feature:
+                df[col] =  df[col].str.replace(' ', '')
+                df[col] =  df[col].str.replace('-', '')
+
+            df['Is_streaming'] = np.where(
+                        (df['StreamingMovies'] == 'Nointernetservice') | (df['StreamingTV'] == 'Nointernetservice'), 'Nointernetservice',
+                            np.where(
+                                (df['StreamingMovies'] == 'Yes') | (df['StreamingTV'] == 'Yes'), 'Yes', 'No'))
+            
+            df['Is_streaming'] = np.where((df['Is_streaming'] == 'Nointernetservice') | (df['Is_streaming'] == 'No'),'No',"Yes")
+
+            drop_columns = ['StreamingMovies','StreamingTV','customerID','TotalCharges']
+            for col in drop_columns:
+                if col in df.columns:
+                    df.drop(columns=[col],inplace=True)
+
+            return df
+            
         except Exception as e:
             raise CustomException(e,sys)
 
@@ -66,7 +105,6 @@ class customData:
         self.PaymentMethod = PaymentMethod
         self.MonthlyCharges = MonthlyCharges
         self.TotalCharges = TotalCharges
-        pass
 
     def get_data_as_dataframe(self):
         try:

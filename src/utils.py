@@ -79,12 +79,16 @@ def feature_engineering(train_df,test_df):
                 np.where(
                     (train_df['StreamingMovies'] == 'Yes') | (train_df['StreamingTV'] == 'Yes'), 'Yes', 'No'))
 
+        train_df['Is_streaming'] = np.where((train_df['Is_streaming'] == 'Nointernetservice') | (train_df['Is_streaming'] == 'No'),'No',"Yes")
+
         test_df['Is_streaming'] = np.where(
             (test_df['StreamingMovies'] == 'Nointernetservice') | (test_df['StreamingTV'] == 'Nointernetservice'), 'Nointernetservice',
                 np.where(
                     (test_df['StreamingMovies'] == 'Yes') | (test_df['StreamingTV'] == 'Yes'), 'Yes', 'No'))
 
-        drop_columns = ['StreamingMovies','StreamingTV']
+        test_df['Is_streaming'] = np.where((test_df['Is_streaming'] == 'Nointernetservice') | (test_df['Is_streaming'] == 'No'),'No',"Yes")
+
+        drop_columns = ['StreamingMovies','StreamingTV','customerID','TotalCharges']
         for col in drop_columns:
             if col in train_df.columns:
                 train_df.drop(columns=[col],inplace=True)

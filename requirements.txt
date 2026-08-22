@@ -8,4 +8,6 @@ xgboost
 lightgbm
 catboost
 Flask
+gunicorn
+optuna
 #-e .

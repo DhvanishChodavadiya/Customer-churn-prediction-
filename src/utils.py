@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import optuna
 import os
 import sys
 import pickle
@@ -22,26 +23,16 @@ def save_object(file_path,obj):
 
 def evaluate_model(X_train,X_test,y_train,y_test):
     try:
-        # report = {}
-        
-        # for i in range(len(list(models))):
-        #     model = list(models.values())[i]
+        #THRESHOLD = 0.3
 
-        #     model.fit(X_train,y_train)
-
-        #     y_train_pred = model.predict(X_train)
-        #     y_test_pred = model.predict(X_test)
-
-        #     train_model_roc_auc_score = roc_auc_score(y_train,y_train_pred)
-        #     test_model_roc_auc_score = roc_auc_score(y_test,y_test_pred)
-
-        #     report[list(models.keys())[i]] = test_model_roc_auc_score
-
+        #model = LogisticRegression(penalty='l1', solver='saga', C=0.0010422116168071938, max_iter= 228, class_weight= 'balanced', tol= 0.009876899486027357)
         model = LogisticRegression(class_weight='balanced',max_iter=1000,C=0.1,penalty='l1',solver='liblinear')
-
+       
         model.fit(X_train,y_train)
 
         y_pred = model.predict(X_test)
+        # proba = model.predict_proba(X_test)[:, 1]
+        # y_pred = (proba >= THRESHOLD).astype(int)   
 
         f1 = f1_score(y_test,y_pred)
         precision = precision_score(y_test,y_pred)

@@ -391,7 +391,7 @@
 </body>
 </html> --> 
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -628,12 +628,513 @@
   <h2>Prediction is {{result}}</h2>
 </div>
 
-<!-- <script>
-document.getElementById('myForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  alert('Form submitted!');
-}); -->
-</script>
 
+
+</body>
+</html> -->
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Simple Form</title>
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 40px 20px;
+  }
+
+  form {
+    background: #fff;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+    width: 100%;
+    max-width: 640px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 20px;
+  }
+
+  h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    text-align: center;
+    color: #333;
+    grid-column: 1 / -1;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+
+  form h2::after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: #764ba2;
+    margin: 10px auto 20px;
+    border-radius: 2px;
+  }
+
+  label {
+    display: block;
+    margin-top: 14px;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #444;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+
+  input[type="number"] {
+    width: 100%;
+    padding: 10px 12px;
+    box-sizing: border-box;
+    border: 1.5px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #333;
+    background-color: #fafafa;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  }
+
+  input[type="number"]:hover {
+    border-color: #b8a6d9;
+  }
+
+  input[type="number"]:focus {
+    outline: none;
+    border-color: #764ba2;
+    background-color: #fff;
+    box-shadow: 0 0 0 3px rgba(118, 75, 162, 0.15);
+  }
+
+  .radio-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 4px 0;
+  }
+
+  .radio-option {
+    position: relative;
+  }
+
+  .radio-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    cursor: pointer;
+  }
+
+  .radio-option label {
+    display: inline-block;
+    margin: 0;
+    padding: 8px 14px;
+    border: 1.5px solid #ddd;
+    border-radius: 20px;
+    background-color: #fafafa;
+    color: #444;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: none;
+    letter-spacing: normal;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+    user-select: none;
+  }
+
+  .radio-option label:hover {
+    border-color: #b8a6d9;
+  }
+
+  .radio-option input[type="radio"]:focus-visible + label {
+    box-shadow: 0 0 0 3px rgba(118, 75, 162, 0.25);
+  }
+
+  .radio-option input[type="radio"]:checked + label {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-color: #764ba2;
+    color: #fff;
+  }
+
+  button {
+    margin-top: 28px;
+    grid-column: 1 / -1;
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 14px rgba(118, 75, 162, 0.35);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+  }
+
+  button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(118, 75, 162, 0.45);
+    opacity: 0.95;
+  }
+
+  button:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 10px rgba(118, 75, 162, 0.35);
+  }
+
+  @media (max-width: 600px) {
+    form {
+      grid-template-columns: 1fr;
+      padding: 28px 24px;
+    }
+  }
+
+  div:has(> h2:only-child) {
+    background: #fff;
+    margin-top: 24px;
+    padding: 20px 40px;
+    border-radius: 12px;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.2);
+    width: 100%;
+    max-width: 640px;
+    text-align: center;
+  }
+
+  div:has(> h2:only-child) h2 {
+    margin: 0;
+    color: #764ba2;
+    font-size: 20px;
+  }
+</style>
+</head>
+<body>
+
+<form id="myForm" action="{{url_for('predict_datapoint')}}" method="post">
+  <h2>Customer Churn Prediction Form</h2>
+
+  <div>
+    <label>Gender</label>
+    <div class="radio-group">
+      <div class="radio-option">
+        <input type="radio" id="gender_Female" name="gender" value="Female" required>
+        <label for="gender_Female">Female</label>
+      </div>
+      <div class="radio-option">
+        <input type="radio" id="gender_Male" name="gender" value="Male" required>
+        <label for="gender_Male">Male</label>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <label>SeniorCitizen</label>
+    <div class="radio-group">
+      <div class="radio-option">
+        <input type="radio" id="SeniorCitizen_1" name="SeniorCitizen" value="1" required>
+        <label for="SeniorCitizen_1">Yes</label>
+      </div>
+      <div class="radio-option">
+        <input type="radio" id="SeniorCitizen_0" name="SeniorCitizen" value="0" required>
+        <label for="SeniorCitizen_0">No</label>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <label>Partner</label>
+    <div class="radio-group">
+      <div class="radio-option">
+        <input type="radio" id="Partner_Yes" name="Partner" value="Yes" required>
+        <label for="Partner_Yes">Yes</label>
+      </div>
+      <div class="radio-option">
+        <input type="radio" id="Partner_No" name="Partner" value="No" required>
+        <label for="Partner_No">No</label>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <label>Dependents</label>
+    <div class="radio-group">
+      <div class="radio-option">
+        <input type="radio" id="Dependents_Yes" name="Dependents" value="Yes" required>
+        <label for="Dependents_Yes">Yes</label>
+      </div>
+      <div class="radio-option">
+        <input type="radio" id="Dependents_No" name="Dependents" value="No" required>
+        <label for="Dependents_No">No</label>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <label for="tenure">Tenure</label>
+    <input type="number" id="tenure" name="tenure" required>
+  </div>
+
+  <div>
+    <label>PhoneService</label>
+    <div class="radio-group">
+      <div class="radio-option">
+        <input type="radio" id="PhoneService_Yes" name="PhoneService" value="Yes" required>
+        <label for="PhoneService_Yes">Yes</label>
+      </div>
+      <div class="radio-option">
+        <input type="radio" id="PhoneService_No" name="PhoneService" value="No" required>
+        <label for="PhoneService_No">No</label>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <label>MultipleLines</label>
+    <div class="radio-group">
+      <div class="radio-option">
+        <input type="radio" id="MultipleLines_Yes" name="MultipleLines" value="Yes" required>
+        <label for="MultipleLines_Yes">Yes</label>
+      </div>
+      <div class="radio-option">
+        <input type="radio" id="MultipleLines_No" name="MultipleLines" value="No" required>
+        <label for="MultipleLines_No">No</label>
+      </div>
+      <div class="radio-option">
+        <input type="radio" id="MultipleLines_NoPhone" name="MultipleLines" value="No phone service" required>
+        <label for="MultipleLines_NoPhone">No phone service</label>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <label>InternetService</label>
+    <div class="radio-group">
+      <div class="radio-option">
+        <input type="radio" id="InternetService_DSL" name="InternetService" value="DSL" required>
+        <label for="InternetService_DSL">DSL</label>
+      </div>
+      <div class="radio-option">
+        <input type="radio" id="InternetService_Fiber" name="InternetService" value="Fiber optic" required>
+        <label for="InternetService_Fiber">Fiber optic</label>
+      </div>
+      <div class="radio-option">
+        <input type="radio" id="InternetService_No" name="InternetService" value="No" required>
+        <label for="InternetService_No">No</label>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <label>OnlineSecurity</label>
+    <div class="radio-group">
+      <div class="radio-option">
+        <input type="radio" id="OnlineSecurity_Yes" name="OnlineSecurity" value="Yes" required>
+        <label for="OnlineSecurity_Yes">Yes</label>
+      </div>
+      <div class="radio-option">
+        <input type="radio" id="OnlineSecurity_No" name="OnlineSecurity" value="No" required>
+        <label for="OnlineSecurity_No">No</label>
+      </div>
+      <div class="radio-option">
+        <input type="radio" id="OnlineSecurity_NoInternet" name="OnlineSecurity" value="No internet service" required>
+        <label for="OnlineSecurity_NoInternet">No internet service</label>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <label>OnlineBackup</label>
+    <div class="radio-group">
+      <div class="radio-option">
+        <input type="radio" id="OnlineBackup_Yes" name="OnlineBackup" value="Yes" required>
+        <label for="OnlineBackup_Yes">Yes</label>
+      </div>
+      <div class="radio-option">
+        <input type="radio" id="OnlineBackup_No" name="OnlineBackup" value="No" required>
+        <label for="OnlineBackup_No">No</label>
+      </div>
+      <div class="radio-option">
+        <input type="radio" id="OnlineBackup_NoInternet" name="OnlineBackup" value="No internet service" required>
+        <label for="OnlineBackup_NoInternet">No internet service</label>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <label>DeviceProtection</label>
+    <div class="radio-group">
+      <div class="radio-option">
+        <input type="radio" id="DeviceProtection_Yes" name="DeviceProtection" value="Yes" required>
+        <label for="DeviceProtection_Yes">Yes</label>
+      </div>
+      <div class="radio-option">
+        <input type="radio" id="DeviceProtection_No" name="DeviceProtection" value="No" required>
+        <label for="DeviceProtection_No">No</label>
+      </div>
+      <div class="radio-option">
+        <input type="radio" id="DeviceProtection_NoInternet" name="DeviceProtection" value="No internet service" required>
+        <label for="DeviceProtection_NoInternet">No internet service</label>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <label>TechSupport</label>
+    <div class="radio-group">
+      <div class="radio-option">
+        <input type="radio" id="TechSupport_Yes" name="TechSupport" value="Yes" required>
+        <label for="TechSupport_Yes">Yes</label>
+      </div>
+      <div class="radio-option">
+        <input type="radio" id="TechSupport_No" name="TechSupport" value="No" required>
+        <label for="TechSupport_No">No</label>
+      </div>
+      <div class="radio-option">
+        <input type="radio" id="TechSupport_NoInternet" name="TechSupport" value="No internet service" required>
+        <label for="TechSupport_NoInternet">No internet service</label>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <label>StreamingTV</label>
+    <div class="radio-group">
+      <div class="radio-option">
+        <input type="radio" id="StreamingTV_Yes" name="StreamingTV" value="Yes" required>
+        <label for="StreamingTV_Yes">Yes</label>
+      </div>
+      <div class="radio-option">
+        <input type="radio" id="StreamingTV_No" name="StreamingTV" value="No" required>
+        <label for="StreamingTV_No">No</label>
+      </div>
+      <div class="radio-option">
+        <input type="radio" id="StreamingTV_NoInternet" name="StreamingTV" value="No internet service" required>
+        <label for="StreamingTV_NoInternet">No internet service</label>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <label>StreamingMovies</label>
+    <div class="radio-group">
+      <div class="radio-option">
+        <input type="radio" id="StreamingMovies_Yes" name="StreamingMovies" value="Yes" required>
+        <label for="StreamingMovies_Yes">Yes</label>
+      </div>
+      <div class="radio-option">
+        <input type="radio" id="StreamingMovies_No" name="StreamingMovies" value="No" required>
+        <label for="StreamingMovies_No">No</label>
+      </div>
+      <div class="radio-option">
+        <input type="radio" id="StreamingMovies_NoInternet" name="StreamingMovies" value="No internet service" required>
+        <label for="StreamingMovies_NoInternet">No internet service</label>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <label>Contract</label>
+    <div class="radio-group">
+      <div class="radio-option">
+        <input type="radio" id="Contract_Month" name="Contract" value="Month-to-month" required>
+        <label for="Contract_Month">Month-to-month</label>
+      </div>
+      <div class="radio-option">
+        <input type="radio" id="Contract_OneYear" name="Contract" value="One year" required>
+        <label for="Contract_OneYear">One year</label>
+      </div>
+      <div class="radio-option">
+        <input type="radio" id="Contract_TwoYear" name="Contract" value="Two year" required>
+        <label for="Contract_TwoYear">Two year</label>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <label>PaperlessBilling</label>
+    <div class="radio-group">
+      <div class="radio-option">
+        <input type="radio" id="PaperlessBilling_Yes" name="PaperlessBilling" value="Yes" required>
+        <label for="PaperlessBilling_Yes">Yes</label>
+      </div>
+      <div class="radio-option">
+        <input type="radio" id="PaperlessBilling_No" name="PaperlessBilling" value="No" required>
+        <label for="PaperlessBilling_No">No</label>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <label>PaymentMethod</label>
+    <div class="radio-group">
+      <div class="radio-option">
+        <input type="radio" id="PaymentMethod_Electronic" name="PaymentMethod" value="Electronic check" required>
+        <label for="PaymentMethod_Electronic">Electronic check</label>
+      </div>
+      <div class="radio-option">
+        <input type="radio" id="PaymentMethod_Mailed" name="PaymentMethod" value="Mailed check" required>
+        <label for="PaymentMethod_Mailed">Mailed check</label>
+      </div>
+      <div class="radio-option">
+        <input type="radio" id="PaymentMethod_Bank" name="PaymentMethod" value="Bank transfer (automatic)" required>
+        <label for="PaymentMethod_Bank">Bank transfer (automatic)</label>
+      </div>
+      <div class="radio-option">
+        <input type="radio" id="PaymentMethod_Credit" name="PaymentMethod" value="Credit card (automatic)" required>
+        <label for="PaymentMethod_Credit">Credit card (automatic)</label>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <label for="MonthlyCharges">MonthlyCharges</label>
+    <input type="number" id="MonthlyCharges" name="MonthlyCharges">
+  </div>
+  
+  <div>
+    <label for="TotalCharges">TotalCharges</label>
+    <input type="number" id="TotalCharges" name="TotalCharges">
+  </div>
+
+  <button type="submit">Submit</button>
+</form>
+
+<!-- <div>
+  <h2>Prediction is {{result}}</h2>
+</div> -->
+
+<div>
+  {% if result is not none %}
+    {% if result == 1 %}
+      <h2>Customer is likely to Churn</h2>
+    {% else %}
+      <h2>Customer is Not likely to Churn</h2>
+    {% endif %}
+  {% else %}
+    <h2>Enter Data to make prediction</h2>
+  {% endif %}
+</div>
 </body>
 </html>

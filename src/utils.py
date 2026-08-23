@@ -7,7 +7,7 @@ import pickle
 from src.exception import CustomException
 from collections import defaultdict
 from sklearn.linear_model import LogisticRegression
-
+from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import roc_auc_score,f1_score,precision_score,recall_score
 
 def save_object(file_path,obj):
@@ -26,17 +26,55 @@ def evaluate_model(X_train,X_test,y_train,y_test):
         #THRESHOLD = 0.3
 
         #model = LogisticRegression(penalty='l1', solver='saga', C=0.0010422116168071938, max_iter= 228, class_weight= 'balanced', tol= 0.009876899486027357)
-        model = LogisticRegression(class_weight='balanced',max_iter=1000,C=0.1,penalty='l1',solver='liblinear')
+        # model = LogisticRegression(class_weight='balanced',max_iter=1000,C=0.1,penalty='l1',solver='liblinear')
        
-        model.fit(X_train,y_train)
+        # model.fit(X_train,y_train)
+
+        # y_pred = model.predict(X_test)
+        # # proba = model.predict_proba(X_test)[:, 1]
+        # # y_pred = (proba >= THRESHOLD).astype(int)   
+
+        # f1 = f1_score(y_test,y_pred)
+        # precision = precision_score(y_test,y_pred)
+        # recall = recall_score(y_test,y_pred)
+
+        param_grid = [
+    {
+        "penalty": ["l1", "l2"],
+        "C": [0.001, 0.01, 0.1, 1, 10, 100],
+        "solver": ["liblinear"],
+    },
+    {
+        "penalty": ["l2", None],
+        "C": [0.001, 0.01, 0.1, 1, 10, 100],
+        "solver": ["lbfgs"],
+    },
+    {
+        "penalty": ["elasticnet"],
+        "C": [0.01, 0.1, 1, 10],
+        "l1_ratio": [0.2, 0.5, 0.8],
+        "solver": ["saga"],
+    },
+]
+
+        grid_search = GridSearchCV(
+            estimator=LogisticRegression(class_weight='balanced',max_iter=1000),
+            param_grid=param_grid,
+            scoring="recall",      # change to "f1", "roc_auc", etc. as needed
+            cv=5,
+            n_jobs=-1,
+            verbose=1,
+        )
+
+        grid_search.fit(X_train, y_train)
+
+        model = grid_search.best_estimator_
 
         y_pred = model.predict(X_test)
-        # proba = model.predict_proba(X_test)[:, 1]
-        # y_pred = (proba >= THRESHOLD).astype(int)   
-
         f1 = f1_score(y_test,y_pred)
         precision = precision_score(y_test,y_pred)
         recall = recall_score(y_test,y_pred)
+
 
         return f1,model,precision,recall
     

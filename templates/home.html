@@ -1126,14 +1126,12 @@
 </div> -->
 
 <div>
-  {% if result is not none %}
+  {% if result is defined and result is not none %}
     {% if result == 1 %}
       <h2>Customer is likely to Churn</h2>
     {% else %}
       <h2>Customer is Not likely to Churn</h2>
     {% endif %}
-  {% else %}
-    <h2>Enter Data to make prediction</h2>
   {% endif %}
 </div>
 </body>
